@@ -4,49 +4,41 @@
 > 实验选择的融合方法是HIS融合
 
 IHS融合方法首先将多光谱图像融合从原始空间变换到HIS控件，以获得强度（Intensity，即I分量），色度（Hue，即H分量），饱和度（Saturation，即S分量）。通常图像的这三个分量相关度比较低，因此可单独对这三个通道中的某个通道进行操作。对于RGB图像，I分量的计算公式为：
+　　　　　　　　　　　　　　　　　　　　　　　　　![](media/image001.png)
 
-$$I_{i,j} = \frac{1}{\sqrt{3}}(r + g + b)$$
+其中![](media/image002.png)针对像素![](media/image003.png)为图像某个像素的红绿蓝分量。
 
-其中$I_{i,j}$针对像素$\left( i,j \right)$。$r,g,b$为图像某个像素的红绿蓝分量。
-
-在得到原始RGB图像的I分量之后，可以先对I分量计算出均值和方差，然后对高分辨率图像进行缩放以匹配RGB图像的均值方差。设RGB图像I分量均值方差分别为：$\overset{\overline{}}{I_{\text{rgb}}}$，${\sigma_{\text{rgb}}}^{2}$，高分辨率图像的均值方差为：$\overset{\overline{}}{I_{H}}$，${\sigma_{H}}^{2}$，${I_{i,j}}_{H}$为高分辨率图像的强度分量，则最终用于反变换I分量为：
-
-$I_{i,j} = \ \sigma_{\text{rgb}}\frac{{I_{i,j}}_{H} - \overset{\overline{}}{I_{H}}}{\sigma_{H}}$+$\overset{\overline{}}{I_{\text{rgb}}}$
-
+在得到原始RGB图像的I分量之后，可以先对I分量计算出均值和方差，然后对高分辨率图像进行缩放以匹配RGB图像的均值方差。设RGB图像I分量均值方差分别为：![](media/image005.png)，![](media/image006.png)，高分辨率图像的均值方差为：![](media/image007.png)，![](media/image008.png)为高分辨率图像的强度分量，则最终用于反变换I分量为：![](media/image009.png)
+　　　　　　　　　　　　　　　　　　　　　　　　　![](media/image010.png)
 将得到的I分量与原RGB图像的H分量与S分量做反变换，可得到融合之后的RGB图像。
 
 示例代码如下：
 
-![](media/image1.png){width="5.768055555555556in"
-height="3.3895833333333334in"}
+![](media/image011.png)
 
 最终融合效果见图3，图1和图2为融合前的RGB图和高分辨率灰度图。
 
-> ![](media/image2.png){width="2.509433508311461in"
-> height="2.5442858705161853in"}![](media/image3.png){width="2.5in"
-> height="2.5347222222222223in"}
->
-> 图 1 RGB图像 图 2 高分辨率灰度图
->
-> ![](media/image4.png){width="2.622642169728784in"
-> height="2.659068241469816in"}
-
+![](media/image012.png)
+图 1 RGB图像
+![](media/image013.png)
+图 2 高分辨率灰度图
+![](media/image014.png)
 图 3 融合后的图像
-
 证据推理实验
 ------------
 
-Dempster组合规则（Dempster’s rule of
-combination）也称证据组合公式，其定义为：对于$\forall A \subseteq \Theta$，$\Theta$上的两个mass函数$m_{1}$，$m_{2}$的Dempster组合规则为：
+Dempster组合规则（Dempster’s rule of combination）也称证据组合公式，其定义为：对于![](media/image015.png)上的两个mass函数![](media/image017.png)![](media/image018.png)
+![](media/image016.png)组合规则为：
 
-$$m_{1}\bigoplus m_{2}\left( A \right) = \ \frac{1}{K}\sum_{B\bigcap C = A}^{}{m_{1}\left( B \right)} \bullet m_{2}(C)$$
 
+
+![](media/image019.png)
 其中K为归一化常数：
-
-$$K = \sum_{B \cap C \neq \phi}^{}{m_{1}\left( B \right)} \cdot m_{2}\left( C \right)$$
+![](media/image020.png)
 
 假设在2001年美国发生“
 911事件”之前，布什总统分别接到美国中央情报局（CIA）和国家安全局（NSA）两大情报机构发来的绝密情报，其内容是关于中东地区的某些国家或组织企图对美国实施突然的恐怖袭击。CIA和NSA得到的证据如表1所示。试计算并回答下列问题：
+![](media/image021.png)
 
 （1）请直接利用Dempster证据合成公式计算表1中的所有“？”内容
 
