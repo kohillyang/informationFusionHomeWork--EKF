@@ -17,11 +17,10 @@ P.append (np.mat([[100 ,0],
                   [0   ,2] ]))
 for  i in range(len(z)):
     x_k_plus = A*x[i] + np.mat( [ [1] , [-0.5] ])*9.8#先验估计
-#     P_k_plus = A*P[i]*A.T
+    P_k_plus = A*P[i]*A.T
     K_k =  P_k_plus *H.T* np.linalg.inv(H*P_k_plus*H.T + R)
     x.append(x_k_plus+K_k * (z[i] - H * x[i]))
     P.append( (np.eye(2,2)-K_k*H) * P_k_plus )
-    x.append(x_k_plus)
     pass
 plt.figure()
 plt.grid();
